@@ -34,15 +34,25 @@ else
         </tbody>
     </table>
 }
+@if (caldata == null)
+{
+    <p><em>Calendar loading...</em></p>
+}
+else
+{
+    <p>@caldata</p>
+}
 
 @code {
     private WeatherForecast[] forecasts;
+    private string caldata;
 
     protected override async Task OnInitializedAsync()
     {
       try
       {
         forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("/api/WeatherForecast");
+        caldata = await Http.GetFromJsonAsync<string>("api/Calendar");
       }
       catch (Exception ex)
       {
